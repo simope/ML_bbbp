@@ -17,7 +17,7 @@ def load_model(model_path: str = "models/nn_model.pt") -> BbbpNN:
     model.eval()
     return model
 
-def predict(smiles: str) -> float:
+def predict(smiles: str) -> bool:
     # Convert SMILES to molecule
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
@@ -34,10 +34,10 @@ def predict(smiles: str) -> float:
     with torch.no_grad():
         probability = model(features).item()
     
-    return int(probability > config.PROB_THRESHOLD)
+    return (probability > config.PROB_THRESHOLD)
 
 if __name__ == "__main__":
     smiles = input("Insert SMILES:\n")
     prediction = predict(smiles)
-    label = "permeable" if prediction else "non-permeable"
-    print(f"According to the model, this molecule is {label}")
+    label = "can pass through the BBB" if prediction else "cannot pass through the BBB"
+    print(f"According to the model, this molecule {label}")
