@@ -26,7 +26,10 @@ def visualize_molecule_3d(smiles: str, width: int = 400, height: int = 400) -> s
     viewer.addModel(Chem.MolToMolBlock(mol), "mol")
     
     # Set visualization style
-    viewer.setStyle({'stick': {'radius': 0.2, 'color': 'spectrum'}})
+    viewer.setStyle({
+        'sphere': {'radius': 0.3, 'color': 'spectrum'},
+        'stick': {'radius': 0.1, 'color': 'spectrum'}
+        })
     viewer.setBackgroundColor('#0E1117')  # Streamlit's dark background color
     viewer.zoomTo()
     
